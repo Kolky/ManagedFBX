@@ -12,6 +12,9 @@ NodeProperty::NodeProperty(FbxProperty prop, bool source, bool destination)
 	case EFbxType::eFbxString:
 		m_Value = gcnew string(prop.Get<FbxString>());
 		break;
+	case EFbxType::eFbxInt:
+		m_Value = gcnew string(prop.Get<FbxInt>().ToString());
+		break;
 	}
 	m_DataType = gcnew string(dataType.GetName());
 	m_isSource = source;
