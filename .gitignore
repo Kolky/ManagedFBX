@@ -27,3 +27,7 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 Build/
+/.vs
+/*.db
+/*.opendb
+/ipch

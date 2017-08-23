@@ -20,6 +20,7 @@
     <ClCompile Include="AssemblyInfo.cpp">
       <Filter>Properties</Filter>
     </ClCompile>
+    <ClCompile Include="NodeProperty.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h" />
@@ -51,6 +52,7 @@
       <Filter>Attributes</Filter>
     </ClInclude>
     <ClInclude Include=".\ConversionTypes.h" />
+    <ClInclude Include="NodeProperty.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Helpers">

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NodeAttribute.h"
+#include "NodeProperty.h"
 #include "Mesh.h"
 #include "Light.h"
 
@@ -28,6 +29,11 @@ namespace ManagedFbx
 		/// Gets a collection of FBX attributes for this node.
 		/// </summary>
 		property_r(IEnumerable<NodeAttribute^>^, Attributes);
+
+		/// <summary>
+		/// Gets a collection of FBX properties for this node.
+		/// </summary>
+		property_r(IEnumerable<NodeProperty^>^, Properties);
 
 		/// <summary>
 		/// Gets and sets the position of this node.
@@ -66,5 +72,6 @@ namespace ManagedFbx
 	private:
 		List<SceneNode^> ^m_children;
 		List<NodeAttribute^> ^m_attributes;
+		List<NodeProperty^> ^m_properties;
 	};
 }

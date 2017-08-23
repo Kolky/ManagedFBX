@@ -9,6 +9,7 @@ SceneNode::SceneNode(FbxNode *node)
 
 	m_children = gcnew List<SceneNode^>();
 	m_attributes = gcnew List<NodeAttribute^>();
+	m_properties = gcnew List<NodeProperty^>();
 
 	for(int i = 0; i < m_nativeNode->GetChildCount(); i++)
 	{
@@ -21,6 +22,31 @@ SceneNode::SceneNode(FbxNode *node)
 		auto attr = m_nativeNode->GetNodeAttributeByIndex(i);
 		m_attributes->Add(gcnew NodeAttribute(attr));
 	}
+
+	for (int i = 0; i < m_nativeNode->GetSrcPropertyCount(); i++)
+	{
+		auto prop = m_nativeNode->GetSrcProperty(i);
+		if (prop.IsValid())
+		{
+			m_properties->Add(gcnew NodeProperty(prop, true, false));
+		}
+	}
+
+	for (int i = 0; i < m_nativeNode->GetDstPropertyCount(); i++)
+	{
+		auto prop = m_nativeNode->GetDstProperty(i);
+		if (prop.IsValid())
+		{
+			m_properties->Add(gcnew NodeProperty(prop, false, true));
+		}
+	}
+
+	auto prop = m_nativeNode->GetFirstProperty();
+	while (prop.IsValid())
+	{
+		m_properties->Add(gcnew NodeProperty(prop, false, false));
+		prop = m_nativeNode->GetNextProperty(prop);
+	}
 }
 
 IEnumerable<SceneNode^>^ SceneNode::ChildNodes::get()
@@ -31,6 +57,11 @@ IEnumerable<SceneNode^>^ SceneNode::ChildNodes::get()
 IEnumerable<NodeAttribute^>^ SceneNode::Attributes::get()
 {
 	return m_attributes->AsReadOnly();
+}
+
+IEnumerable<NodeProperty^>^ SceneNode::Properties::get()
+{
+	return m_properties->AsReadOnly();
 }
 
 string ^SceneNode::Name::get()
