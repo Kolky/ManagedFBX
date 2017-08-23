@@ -9,6 +9,7 @@ namespace ManagedFbx
 	public:
 		property_r(bool, IsSource);
 		property_r(bool, IsDestination);
+		property_r(bool, IsUserDefined);
 		property_r(string^, Name);
 		property_r(string^, DataType);
 		property_r(string^, Value);
@@ -19,5 +20,6 @@ namespace ManagedFbx
 		string^ m_Value;
 		bool m_isSource;
 		bool m_isDestination;
+		bool m_isUserDefined;
 	};
 }

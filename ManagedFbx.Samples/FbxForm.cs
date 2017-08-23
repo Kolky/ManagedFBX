@@ -40,6 +40,7 @@ public partial class FbxForm : Form
         if (parentNode == null)
         {
             uxFbxTree.ExpandAll();
+            uxFbxTree.SelectedNode = item;
         }
     }
 
@@ -58,9 +59,16 @@ public partial class FbxForm : Form
         builder.AppendLine($"Rotation:\t{node.Rotation}");
         builder.AppendLine($"Scale:\t{node.Scale}");
 
-        AppendProperties(node, x => x.IsSource, "source", builder);
-        AppendProperties(node, x => x.IsDestination, "destination", builder);
-        AppendProperties(node, x => !x.IsSource && !x.IsDestination, "regular", builder);
+        if (settingsShowAllProperties.Checked)
+        {
+            AppendProperties(node, x => x.IsSource, "source", builder);
+            AppendProperties(node, x => x.IsDestination, "destination", builder);
+            AppendProperties(node, x => !x.IsSource && !x.IsDestination, "regular", builder);
+        }
+        else
+        {
+            AppendProperties(node, x => x.IsUserDefined, "user", builder);
+        }
 
         if (node.Attributes.Any())
         {
@@ -70,7 +78,7 @@ public partial class FbxForm : Form
                 switch (attr.Type)
                 {
                     case NodeAttributeType.Mesh:
-                        AppendMesh(node.Mesh, builder, false, false);
+                        AppendMesh(node.Mesh, builder, settingsShowMeshDetails.Checked, settingsTriangulateMeshes.Checked);
                         break;
 
                     case NodeAttributeType.Light:
@@ -94,7 +102,8 @@ public partial class FbxForm : Form
             builder.AppendLine($"Found {node.Properties.Count(predicate)} {typeOf} propertie(s)");
             foreach (var prop in node.Properties.Where(predicate))
             {
-                builder.AppendLine($"\tProperty name: {prop.Name}, type: {prop.DataType} (s: {prop.IsSource}, d: {prop.IsDestination}), value: {prop.Value}");
+                builder.AppendLine($"\tProperty name: {prop.Name}, type: {prop.DataType}, value:");
+                builder.AppendLine($"\t\t{prop.Value?.Replace("\n", "\n\t\t")}");
             }
         }
     }

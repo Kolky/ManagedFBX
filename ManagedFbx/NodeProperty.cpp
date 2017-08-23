@@ -47,6 +47,7 @@ NodeProperty::NodeProperty(FbxProperty prop, bool source, bool destination)
 		break;
 	}
 	m_DataType = gcnew string(dataType.GetName());
+	m_isUserDefined = prop.GetFlag(FbxPropertyFlags::eUserDefined);
 	m_isSource = source;
 	m_isDestination = destination;
 }
@@ -59,6 +60,11 @@ bool NodeProperty::IsSource::get()
 bool NodeProperty::IsDestination::get()
 {
 	return m_isDestination;
+}
+
+bool NodeProperty::IsUserDefined::get()
+{
+	return m_isUserDefined;
 }
 
 string ^NodeProperty::Name::get()
