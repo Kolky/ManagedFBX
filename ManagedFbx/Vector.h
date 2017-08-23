@@ -111,6 +111,11 @@ namespace ManagedFbx
 			X = vector[0];
 			Y = vector[1];
 		}
+		Vector2(FbxDouble2 vector)
+		{
+			X = vector[0];
+			Y = vector[1];
+		}
 	};
 
 	public value struct Vector4

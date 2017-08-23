@@ -15,6 +15,36 @@ NodeProperty::NodeProperty(FbxProperty prop, bool source, bool destination)
 	case EFbxType::eFbxInt:
 		m_Value = gcnew string(prop.Get<FbxInt>().ToString());
 		break;
+	case EFbxType::eFbxFloat:
+		m_Value = gcnew string(prop.Get<FbxFloat>().ToString());
+		break;
+	case EFbxType::eFbxDouble:
+		m_Value = gcnew string(prop.Get<FbxDouble>().ToString());
+		break;
+	case EFbxType::eFbxEnum:
+		m_Value = gcnew string(prop.Get<FbxEnum>().ToString());
+		break;
+	case EFbxType::eFbxBool:
+		m_Value = gcnew string(prop.Get<FbxBool>().ToString());
+		break;
+	case EFbxType::eFbxDouble2:
+		{
+			FbxDouble2 double2 = prop.Get<FbxDouble2>();
+			m_Value = gcnew string(Vector2(double2).ToString());
+		}
+		break;
+	case EFbxType::eFbxDouble3:
+		{
+			FbxDouble3 double3 = prop.Get<FbxDouble3>();
+			m_Value = gcnew string(Vector3(double3).ToString());
+		}
+		break;
+	case EFbxType::eFbxDouble4:
+		{
+			FbxDouble4 double4 = prop.Get<FbxDouble4>();
+			m_Value = gcnew string(Vector3(double4).ToString());
+		}
+		break;
 	}
 	m_DataType = gcnew string(dataType.GetName());
 	m_isSource = source;
