@@ -119,3 +119,8 @@ Light ^SceneNode::Light::get()
 {
 	return gcnew ManagedFbx::Light(m_nativeNode->GetLight());
 }
+
+Camera ^SceneNode::Camera::get()
+{
+	return gcnew ManagedFbx::Camera(m_nativeNode->GetCamera());
+}

@@ -4,6 +4,7 @@
 #include "NodeProperty.h"
 #include "Mesh.h"
 #include "Light.h"
+#include "Camera.h"
 
 using namespace System::Collections::Generic;
 
@@ -59,6 +60,11 @@ namespace ManagedFbx
 		/// Gets the first light attribute of this node if it exists, otherwise null.
 		/// </summary>
 		property_r(ManagedFbx::Light^, Light);
+
+		/// <summary>
+		/// Gets the first camera attribute of this node if it exists, otherwise null.
+		/// </summary>
+		property_r(ManagedFbx::Camera^, Camera);
 
 		/// <summary>
 		/// Adds an existing node as a child of this node.
