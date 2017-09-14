@@ -7,6 +7,7 @@ NodeProperty::NodeProperty(FbxProperty prop, bool source, bool destination)
 {
 	m_Name = gcnew string(prop.GetName());
 	auto dataType = prop.GetPropertyDataType();
+
 	switch (dataType.GetType())
 	{
 	case EFbxType::eFbxString:
@@ -46,6 +47,7 @@ NodeProperty::NodeProperty(FbxProperty prop, bool source, bool destination)
 		}
 		break;
 	}
+
 	m_DataType = gcnew string(dataType.GetName());
 	m_isUserDefined = prop.GetFlag(FbxPropertyFlags::eUserDefined);
 	m_isSource = source;

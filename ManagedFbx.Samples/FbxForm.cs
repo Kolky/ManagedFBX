@@ -92,10 +92,20 @@ public partial class FbxForm : Form
             }
         }
 
+        if (node.Materials.Any())
+        {
+            builder.AppendLine($"Found {node.Materials.Count()} material(s)");
+            foreach (var mat in node.Materials)
+            {
+                builder.AppendLine($"Material: {mat.Name} with {mat.ShadingModel}");
+                AppendProperties(mat, x => x.IsUserDefined, "user", builder);
+            }
+        }
+
         uxNodeInfo.Text = builder.ToString();
     }
 
-    private void AppendProperties(SceneNode node, Func<NodeProperty, bool> predicate, string typeOf, StringBuilder builder)
+    private void AppendProperties(SceneObject node, Func<NodeProperty, bool> predicate, string typeOf, StringBuilder builder)
     {
         if (node.Properties.Any(predicate))
         {
@@ -110,7 +120,7 @@ public partial class FbxForm : Form
 
     private void AppendMesh(Mesh mesh, StringBuilder builder, bool full, bool triangulate)
     {
-        builder.AppendLine($"Mesh:");
+        builder.AppendLine($"Mesh: {mesh.Name}");
 
         if (!mesh.Triangulated && triangulate)
         {

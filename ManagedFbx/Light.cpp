@@ -4,6 +4,7 @@
 using namespace ManagedFbx;
 
 Light::Light(FbxLight *nativeLight)
+	: SceneObject(nativeLight)
 {
 	m_nativeLight = nativeLight;
 }

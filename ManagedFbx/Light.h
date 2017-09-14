@@ -1,5 +1,7 @@
 #pragma once
 
+#include "SceneObject.h"
+
 namespace ManagedFbx
 {
 	public enum class LightType
@@ -9,7 +11,7 @@ namespace ManagedFbx
 		Directional = FbxLight::eDirectional
 	};
 
-	public ref class Light
+	public ref class Light : SceneObject
 	{
 	public:
 		property_r(LightType, Type);

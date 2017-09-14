@@ -1,10 +1,11 @@
 #pragma once
 
+#include "SceneObject.h"
 #include "Polygon.h"
 
 namespace ManagedFbx
 {
-	public ref class Mesh
+	public ref class Mesh : SceneObject
 	{
 	public:
 		property_r(array<Polygon>^, Polygons);
@@ -15,6 +16,7 @@ namespace ManagedFbx
 		property_r(array<int>^, MaterialIDs);
 		property_r(bool, Triangulated);
 		property int UVLayer;
+		property_r(int, UVLayerCount);
 
 		Mesh ^Triangulate();
 

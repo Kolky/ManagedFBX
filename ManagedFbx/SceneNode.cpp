@@ -3,13 +3,14 @@
 
 using namespace ManagedFbx;
 
-SceneNode::SceneNode(FbxNode *node)
+SceneNode::SceneNode(FbxNode *nativeNode)
+	: SceneObject(nativeNode)
 {
-	m_nativeNode = node;
+	m_nativeNode = nativeNode;
 
 	m_children = gcnew List<SceneNode^>();
 	m_attributes = gcnew List<NodeAttribute^>();
-	m_properties = gcnew List<NodeProperty^>();
+	m_materials = gcnew List<Material^>();
 
 	for(int i = 0; i < m_nativeNode->GetChildCount(); i++)
 	{
@@ -23,29 +24,10 @@ SceneNode::SceneNode(FbxNode *node)
 		m_attributes->Add(gcnew NodeAttribute(attr));
 	}
 
-	for (int i = 0; i < m_nativeNode->GetSrcPropertyCount(); i++)
+	for (int i = 0; i < m_nativeNode->GetMaterialCount(); ++i)
 	{
-		auto prop = m_nativeNode->GetSrcProperty(i);
-		if (prop.IsValid())
-		{
-			m_properties->Add(gcnew NodeProperty(prop, true, false));
-		}
-	}
-
-	for (int i = 0; i < m_nativeNode->GetDstPropertyCount(); i++)
-	{
-		auto prop = m_nativeNode->GetDstProperty(i);
-		if (prop.IsValid())
-		{
-			m_properties->Add(gcnew NodeProperty(prop, false, true));
-		}
-	}
-
-	auto prop = m_nativeNode->GetFirstProperty();
-	while (prop.IsValid())
-	{
-		m_properties->Add(gcnew NodeProperty(prop, false, false));
-		prop = m_nativeNode->GetNextProperty(prop);
+		auto mat = m_nativeNode->GetMaterial(i);
+		m_materials->Add(gcnew Material(mat));
 	}
 }
 
@@ -59,19 +41,9 @@ IEnumerable<NodeAttribute^>^ SceneNode::Attributes::get()
 	return m_attributes->AsReadOnly();
 }
 
-IEnumerable<NodeProperty^>^ SceneNode::Properties::get()
+IEnumerable<Material^>^ SceneNode::Materials::get()
 {
-	return m_properties->AsReadOnly();
-}
-
-string ^SceneNode::Name::get()
-{
-	return gcnew string(m_nativeNode->GetName());
-}
-
-void SceneNode::Name::set(string ^value)
-{
-	m_nativeNode->SetName(StringHelper::ToNative(value));
+	return m_materials->AsReadOnly();
 }
 
 void SceneNode::AddChild(SceneNode ^node)
@@ -118,4 +90,9 @@ Mesh ^SceneNode::Mesh::get()
 Light ^SceneNode::Light::get()
 {
 	return gcnew ManagedFbx::Light(m_nativeNode->GetLight());
+}
+
+Camera ^SceneNode::Camera::get()
+{
+	return gcnew ManagedFbx::Camera(m_nativeNode->GetCamera());
 }

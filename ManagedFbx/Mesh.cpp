@@ -5,6 +5,7 @@
 using namespace ManagedFbx;
 
 Mesh::Mesh(FbxMesh *nativeMesh)
+	: SceneObject(nativeMesh)
 {
 	m_nativeMesh = nativeMesh;
 }
@@ -83,6 +84,11 @@ array<Vector2> ^Mesh::TextureCoords::get()
 		list[i] = Vector2(coords->GetDirectArray().GetAt(i));
 
 	return list;
+}
+
+int Mesh::UVLayerCount::get()
+{
+	return m_nativeMesh->GetUVLayerCount();
 }
 
 int Mesh::GetMaterialId(int polygon)
