@@ -1,20 +1,17 @@
 #pragma once
 
-#include "SceneObject.h"
-
 namespace ManagedFbx
 {
 	public enum class ProjectionType
 	{
 		Perspective = FbxCamera::ePerspective,
-		Orthogonal = FbxCamera::eOrthogonal
+		eOrthogonal = FbxCamera::eOrthogonal
 	};
 
-	public ref class Camera : SceneObject
+	public ref class Camera
 	{
 	public:
-		property_r(ProjectionType, Projection);
-		property_r(Vector3, Position);
+		property_r(ProjectionType, Type);
 	internal:
 		Camera(FbxCamera *nativeCamera);
 	private:

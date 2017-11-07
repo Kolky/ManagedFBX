@@ -24,10 +24,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Attributes</Filter>
     </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>Attributes</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h" />
@@ -63,10 +59,6 @@
     <ClInclude Include="Camera.h">
       <Filter>Attributes</Filter>
     </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>Attributes</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Helpers">
