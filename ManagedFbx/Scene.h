@@ -26,7 +26,7 @@ namespace ManagedFbx
 		/// <summary>
 		/// Saves the scene to a file.
 		/// </summary>
-		void Save(string ^filepath);
+		void Save(string ^filepath, int format);
 
 		/// <summary>
 		/// Converts the scene to a given unit system.
@@ -59,6 +59,11 @@ namespace ManagedFbx
 		property_rw(string^, Application);
 
 		property_r(string^, UnitType);
+
+		/// <summary>
+		/// Gets the direct children of this node.
+		/// </summary>
+		property_r(IEnumerable<string^>^, ExportFormats);
 
 	private:
 		FbxScene *m_nativeScene;

@@ -54,7 +54,7 @@ public partial class FbxForm : Form
         }
 
         var builder = new StringBuilder();
-
+        builder.AppendLine($"Flags:\t{node.Flags.ToString()}");
         builder.AppendLine($"Position:\t{node.Position}");
         builder.AppendLine($"Rotation:\t{node.Rotation}");
         builder.AppendLine($"Scale:\t{node.Scale}");
@@ -224,13 +224,18 @@ public partial class FbxForm : Form
 
     private void SaveFile(object sender, EventArgs e)
     {
+        foreach (var format in m_scene.ExportFormats)
+        {
+            Console.WriteLine(format);
+        }
+
         var dialog = new SaveFileDialog();
         dialog.Filter = "FBX file (*.fbx)|*.fbx";
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
             var filePath = dialog.FileName;
-            m_scene.Save(filePath);
+            m_scene.Save(filePath, -1);
         }
     }
 

@@ -44,6 +44,11 @@ string ^SceneObject::Name::get()
 	return gcnew string(m_nativeObject->GetName());
 }
 
+ObjectFlag SceneObject::Flags::get()
+{
+	return (ObjectFlag)m_nativeObject->GetAllObjectFlags();
+}
+
 void SceneObject::Name::set(string ^value)
 {
 	m_nativeObject->SetName(StringHelper::ToNative(value));

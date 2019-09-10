@@ -31,11 +31,11 @@ Scene ^Scene::Import(string ^filename)
 	return scene;
 }
 
-void Scene::Save(string ^filename)
+void Scene::Save(string ^filename, int format)
 {
 	auto exporter = Manager::GetExporter();
 
-	if(!exporter->Initialize(StringHelper::ToNative(filename)))
+	if(!exporter->Initialize(StringHelper::ToNative(filename), format))
 		throw gcnew FbxException("Failed to initialise the FBX exporter: {0}", gcnew string(exporter->GetStatus().GetErrorString()));
 
 	if(!exporter->Export(m_nativeScene))
@@ -133,4 +133,17 @@ void Scene::BakeTransform(SceneNode ^node)
 		auto pos = mesh->GetControlPointAt(i);
 		mesh->SetControlPointAt(total.MultT(pos), i);
 	}
+}
+
+IEnumerable<string^>^ Scene::ExportFormats::get()
+{
+	auto formats = gcnew List<string^>();
+	auto registry = Manager::GetInstance()->GetIOPluginRegistry();
+	int formatCount = registry->GetWriterFormatCount();
+	for (int formatIndex = 0; formatIndex < formatCount; ++formatIndex)
+	{
+		formats->Add(gcnew string(registry->GetWriterFormatDescription(formatIndex)));
+	}
+
+	return formats;
 }
